@@ -1,34 +1,7 @@
 import { Box, Button, Text, TextField, Image } from '@skynexui/components';
 import appConfig from '../config.json';
+import React from 'react'
 
-function GlobalStyle() {
-    return (
-        <style global jsx>{`
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        list-style: none;
-      }
-      body {
-        font-family: 'Open Sans', sans-serif;
-      }
-      /* App fit Height */ 
-      html, body, #__next {
-        min-height: 100vh;
-        display: flex;
-        flex: 1;
-      }
-      #__next {
-        flex: 1;
-      }
-      #__next > * {
-        flex: 1;
-      }
-      /* ./App fit Height */ 
-    `}</style>
-    );
-}
 
 function Titulo(props) {
     const Tag = props.tag || 'h1';
@@ -47,11 +20,11 @@ function Titulo(props) {
 }
 
 export default function PaginaInicial() {
-    const username = 'matheus-antiqueira';
+    const [username, setUserName] = React.useState('matheus-antiqueira');
+    const [usernameImage, setUserNameImage] = React.useState(username);
 
     return (
         <>
-            <GlobalStyle />
             <Box
                 styleSheet={{
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -89,6 +62,13 @@ export default function PaginaInicial() {
                         </Text>
 
                         <TextField
+                            onChange={function (event) {
+                                const value = event.target.value;
+                                setUserName(value);
+                                if(value.length > 2) {
+                                    setUserNameImage(value);
+                                }
+                            }}
                             fullWidth
                             textFieldColors={{
                                 neutral: {
@@ -135,10 +115,10 @@ export default function PaginaInicial() {
                                 borderRadius: '50%',
                                 paddingBottom: '16px'
                             }}
-                            src={`https://github.com/${username}.png`}
+                            src={`https://github.com/${usernameImage}.png`}
                         />
                         <Text
-                            variant="body4"w
+                            variant="body4" 
                             styleSheet={{
                                 color: appConfig.theme.colors.neutrals[200],
                                 backgroundColor: appConfig.theme.colors.neutrals[900],
